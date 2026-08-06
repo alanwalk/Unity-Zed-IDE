@@ -2,7 +2,7 @@
 
 ![Platforms](https://img.shields.io/badge/platform-Windows%20%7C%20macOS%20%7C%20Linux-blue)
 ![Unity](https://img.shields.io/badge/Unity-2022.3%2B-orange)
-![Version](https://img.shields.io/badge/version-1.0.0-green)
+![Version](https://img.shields.io/badge/version-1.1.0-green)
 
 A Unity package by **[Doneref Studios](https://github.com/Doneref-Studios)** that integrates the [Zed](https://zed.dev) code editor as Unity's external script editor, with full support for C# project generation and file-open workflows across **Windows**, **macOS**, and **Linux**.
 
@@ -106,11 +106,31 @@ This creates the `.sln` and updates `.zed/settings.json` with:
 
 Restart Zed after regenerating. The first load takes ~30s while Roslyn indexes the solution.
 
+## Contributing
+
+We welcome contributions that help keep the project in good shape.
+
+### Ground rules
+
+- No malicious code, harmful behavior, or harassment of any kind.
+- Be respectful and constructive in reviews and discussions.
+
+### Workflow
+
+1. Fork the repository and create a feature branch from `dev`.
+2. Make your changes in the feature branch.
+3. Open a pull request that targets the `dev` branch.
+4. Community reviews are welcome and encouraged, but a Doneref team member must manually merge the pull request into `dev` after a final review.
+5. The Doneref team releases `dev` to `main` when the changes are ready for a new release.
+
 ## Acknowledgements
 
 Forked from [Maligan/unity-zed](https://github.com/Maligan/unity-zed).
 
 Windows process and path fixes contributed by the upstream community (see [PR #16](https://github.com/Maligan/unity-zed/pull/16)).
+
+- [ByteSz](https://github.com/ByteSz) — added support for global and custom Windows Zed installation paths.
+- [somedeveloper00](https://github.com/somedeveloper00) — contributed the custom Zed path support used in the Windows discovery improvements.
 
 ## License
 

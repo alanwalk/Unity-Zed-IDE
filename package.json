@@ -2,7 +2,7 @@
   "name": "com.doneref.unity-zed-ide",
   "displayName": "Zed IDE",
   "description": "Integrates the Zed code editor as Unity's external script editor with full support for C# project generation on Windows, macOS, and Linux.",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "unity": "2022.3",
   "license": "MIT",
   "licensesUrl": "https://github.com/Doneref-Studios/Unity-Zed-IDE/blob/main/LICENSE.txt",
