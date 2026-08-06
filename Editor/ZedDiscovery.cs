@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Xml.XPath;
 using System.Text;
 using NiceIO;
+using System;
+using System.IO;
 
 namespace UnityZed
 {
@@ -21,7 +23,7 @@ namespace UnityZed
                 // [Linux] (Flatpak)
                 ("/var/lib/flatpak/app/dev.zed.Zed/current/active/files/bin/zed", null),
 
-                // [Linux] (Repo) 
+                // [Linux] (Repo)
                 ("/usr/bin/zeditor", null),
 
                 // [Linux] (NixOS)
@@ -34,10 +36,14 @@ namespace UnityZed
                 // [Linux] (Official Website)
                 (NPath.HomeDirectory.Combine(".local/bin/zed"), null),
 
-                // [Windows] (Official Website - CLI)
+                // [Windows] (Official Website - CLI Local Install)
                 (NPath.HomeDirectory.Combine("AppData/Local/Programs/Zed/bin/zed.exe"), null),
-                // [Windows] (Official Website - GUI)
+                // [Windows] (Official Website - CLI Global Install)
+                (Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles), "Zed/bin/zed.exe"), null),
+                // [Windows] (Official Website - GUI Local Install)
                 (NPath.HomeDirectory.Combine("AppData/Local/Programs/Zed/Zed.exe"), null),
+                // [Windows] (Official Website - GUI Global Install)
+                (Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles), "Zed/Zed.exe"), null)
             };
 
             foreach (var candidate in candidates)
@@ -74,6 +80,33 @@ namespace UnityZed
                     installation = installed;
                     return true;
                 }
+            }
+
+            // Unity allows selecting an executable manually. Do not reject a valid custom,
+            // preview, portable, or future Zed install merely because it is not in our list.
+            if (string.IsNullOrWhiteSpace(editorPath))
+            {
+                installation = default;
+                return false;
+            }
+
+            try
+            {
+                var customPath = new NPath(editorPath);
+                if (customPath.FileExists() && customPath.FileNameWithoutExtension.StartsWith("zed", StringComparison.OrdinalIgnoreCase))
+                {
+                    installation = new()
+                    {
+                        Name = "Zed [Custom]",
+                        Path = customPath.MakeAbsolute().ToString(),
+                    };
+                    return true;
+                }
+            }
+            catch (ArgumentException)
+            {
+                // Invalid paths can be stored by older Unity preferences. Treat them as
+                // unsupported rather than breaking the External Tools preferences UI.
             }
 
             installation = default;
